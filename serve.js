@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const vigilanteRoute= require('./routes/vigilanteRoute');
+const estudianteRoute= require('./routes/estudianteRoute')
 const userRoute= require('./routes/userRoute');
 const authRoute= require('./routes/authRoute')
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/auth',authRoute);
 app.use('/vigilantes',vigilanteRoute);
+app.use('/estudiantes',estudianteRoute);
 app.use('/user',userRoute)
 
 

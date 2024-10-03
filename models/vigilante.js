@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Vigilante.belongsTo(models.Persona, { foreignKey: 'idPersona' });
+      Vigilante.belongsTo(models.Persona, { foreignKey: 'idPersona', as: 'persona'});
     }
   }
   Vigilante.init({

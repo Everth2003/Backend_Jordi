@@ -1,15 +1,15 @@
-const { Vigilante, Persona, User, Role } = require('../models');
+const { Estudiante, Persona, User, Role } = require('../models');
+
 const bcrypt = require('bcryptjs');
-exports.crearVigilante = async (req, res) => {
-    const { documento, nombres, apellidos, sexo, telefono, email,fechaTurno} = req.body;
+
+exports.crearEstudiante = async (req, res) => {
+    const { documento, nombres, apellidos, sexo, telefono, email, carrera } = req.body;
 
     try {
-        // Verificar si ya existe una persona con ese documento
         const personaExistente = await Persona.findOne({ where: { documento } });
         if (personaExistente) {
             return res.status(400).json({ message: "La persona ya está registrada" });
         }
-
         // Crear una nueva Persona
         const nuevaPersona = await Persona.create({
             documento,
@@ -20,19 +20,19 @@ exports.crearVigilante = async (req, res) => {
             email
         });
 
-        // Crear un nuevo Vigilante asociado a la Persona
-        const nuevoVigilante = await Vigilante.create({
+        // Crear un nuevo Estudiante asociado a la Persona
+        const nuevoEstudiante = await Estudiante.create({
             idPersona: nuevaPersona.id,
-            fechaTurno
-        });
+            carrera
+        })
 
         // Extraer la parte del email antes del @ para el nombre de usuario
         const username = email.split('@')[0];
 
         // Buscar el rol "profesor"
-        const role = await Role.findOne({ where: { roleName: 'Vigilante' } });
+        const role = await Role.findOne({ where: { roleName: 'Estudiante' } });
         if (!role) {
-            return res.status(400).json({ message: "Rol 'vigilante' no encontrado" });
+            return res.status(400).json({ message: "Rol 'estudiante' no encontrado" });
         }
 
         // Hashear el documento (que es la contraseña) para el usuario
@@ -46,8 +46,8 @@ exports.crearVigilante = async (req, res) => {
             password: hashedPassword
         })
         res.status(201).json({
-            message: 'Vigilante y usuario creados exitosamente',
-            data: { nuevaPersona, nuevoVigilante, nuevoUsuario }
+            message: 'Estudiante y usuario creados exitosamente',
+            data: { nuevaPersona, nuevoEstudiante, nuevoUsuario }
         });
 
     } catch (error) {
