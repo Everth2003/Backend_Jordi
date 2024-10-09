@@ -58,3 +58,24 @@ exports.crearEstudiante = async (req, res) => {
         });
     }
 }
+
+
+exports.listarEstudiantes = async (req, res) => {
+    try {
+      const estudiante = await Estudiante.findAll({
+        include: [
+         {  model: Persona, 
+            as: 'persona',
+            include: [
+              { model: User, as: 'usuario' }  // Incluye 'Users' a través de 'Persona'
+            ]
+          }   // Incluye información del usuario asociado
+        ]
+      });
+  
+      res.status(200).json({ Estudiante});
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error al listar los estudiantes', error: error.message });
+    }
+  };

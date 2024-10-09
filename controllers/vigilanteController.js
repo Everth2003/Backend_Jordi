@@ -49,7 +49,6 @@ exports.crearVigilante = async (req, res) => {
             message: 'Vigilante y usuario creados exitosamente',
             data: { nuevaPersona, nuevoVigilante, nuevoUsuario }
         });
-
     } catch (error) {
         console.error(error);
         res.status(500).json({
