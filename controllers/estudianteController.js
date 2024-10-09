@@ -73,7 +73,7 @@ exports.listarEstudiantes = async (req, res) => {
         ]
       });
   
-      res.status(200).json({ Estudiante});
+      res.status(200).json({estudiante});
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Error al listar los estudiantes', error: error.message });
