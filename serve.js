@@ -14,7 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/auth',authRoute);
-app.use('/vigilantes',vigilanteRoute);
+app.use('/vigilantes' ,authMiddleware(['Estudiante','Vigilante']),vigilanteRoute);
 app.use('/estudiantes',estudianteRoute);
 app.use('/user',userRoute)
 
